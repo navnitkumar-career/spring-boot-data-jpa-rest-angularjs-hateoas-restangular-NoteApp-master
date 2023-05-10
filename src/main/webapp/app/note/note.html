@@ -1,0 +1,81 @@
+<h4>
+
+    <ol class="breadcrumb">
+        <li><a ui-sref="public">Home</a></li>
+        <li><a  ui-sref="person.detail({id:vm.person.id})">Person : {{::vm.person.firstName}} {{::vm.person.midName}} {{::vm.person.lastName}}</a></li>
+        <li class="active">
+            <span class="form-header">Notes</span>
+        </li>
+    </ol>
+</h4>
+
+<notification ng-if="vm.message.body" message="vm.message"></notification>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xs-4 no-padding-left">
+            <button class="btn btn-primary" ui-sref="note.new">
+                <span class="fa fa-plus"></span>
+                    <span>
+                        Add new Note
+                    </span>
+            </button>
+        </div>
+    </div>
+</div>
+<br/>
+
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Content</th>
+            <th>Created Date</th>
+            <th>View Count</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="note in vm.notes">
+            <td>{{::note.id}}</td>
+            <td>{{::note.title}} </td>
+            <td>{{::note.content | limitTo : 35}}</td>
+            <td>{{::note.createdDate | date : 'dd/MM/yyyy'}}</td>
+            <td>{{::note.viewCount}}</td>
+            <td>
+                <div class="btn-group flex-btn-group-container">
+                    <button type="submit"
+                            ui-sref="note.detail({id:note.id})"
+                            class="btn btn-info btn-sm">
+                        <span class="fa fa-eye"></span>
+                        <span class="hidden-xs hidden-sm">View</span>
+                    </button>
+                    <button type="submit"
+                            ui-sref="note.duplicate({id:note.id})"
+                            class="btn btn-info btn-sm">
+                        <span class="fa fa-copy"></span>
+                        <span class="hidden-xs hidden-sm">Duplicate</span>
+                    </button>
+                    <button type="submit"
+                            ui-sref="note.edit({id:note.id})"
+                            class="btn btn-primary btn-sm">
+                        <span class="fa fa-pencil"></span>
+                        <span class="hidden-xs hidden-sm">Edit</span>
+                    </button>
+                    <button type="submit"
+                            ng-click="vm.remove(note)"
+                            class="btn btn-danger btn-sm">
+                        <span class="fa fa-remove"></span>
+                        <span class="hidden-xs hidden-sm">Delete</span>
+                    </button>
+                </div>
+            </td>
+        </tr>
+
+
+        </tbody>
+
+    </table>
+</div>

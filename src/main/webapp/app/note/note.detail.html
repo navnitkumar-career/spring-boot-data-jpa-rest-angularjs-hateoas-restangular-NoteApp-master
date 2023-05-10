@@ -1,0 +1,74 @@
+<h4>
+
+    <ol class="breadcrumb">
+        <li><a ui-sref="public">Home</a></li>
+        <li><a  ui-sref="person.detail({id:vm.person.id})">Person : {{vm.person.firstName}} {{vm.person.midName}} {{vm.person.lastName}}</a></li>
+        <li><a ui-sref="note">Notes</a></li>
+        <li class="active">
+        <span class="form-header" ng-show="vm.mode == 'CREATE'">
+            Create A New Note
+        </span>
+        <span class="form-header" ng-show="vm.mode == 'VIEW'">
+            Note Detail
+        </span>
+        <span class="form-header" ng-show="vm.mode == 'EDIT'">
+            Edit Note
+        </span>
+        <span class="form-header" ng-show="vm.mode == 'DUPLICATE'">
+            New Note | Duplicate Existing
+        </span>
+        </li>
+    </ol>
+</h4>
+
+<notification ng-if="vm.message.body" message="vm.message"></notification>
+
+<form name="form" role="form" novalidate>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-sm-4 col-lg-4">
+                <div class="form-group">
+                    <label class="font-normal">Title <span class="required">*</span></label>
+
+                    <div class="input-group">
+                        <input type="text" ng-readonly="!vm.editable" ng-model="vm.note.title" class="form-control">
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-8 col-lg-8">
+                <div class="form-group">
+                    <label class="font-normal">Content<span class="required">*</span></label>
+
+                    <div class="input-group">
+                        <textarea ng-readonly="!vm.editable" ng-model="vm.note.content" class="form-control" rows="5" cols="35"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-4 col-lg-4" ng-hide="vm.mode != 'VIEW'">
+                <div class="form-group">
+                    <label class="font-normal">Created Date <span class="required">*</span></label>
+
+                    <div class="input-group">
+                        <input type="text" ng-readonly="!vm.editable" ng-value="vm.note.createdDate  | date : 'dd/MM/yyyy'" class="form-control">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr/>
+    </div>
+
+    <div class="form-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.goBack()">
+            <span class="fa fa-backward"></span>&nbsp;<span>Go Back</span>
+        </button>
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()" ng-show="vm.editable">
+            <span class="fa fa-eraser"></span>&nbsp;<span>Clear</span>
+        </button>
+        <button type="button" class="btn btn-primary" ng-click="vm.save()" ng-hide="vm.mode =='VIEW'">
+            <span class="fa fa-save"></span>&nbsp;<span>Save</span>&nbsp;
+        </button>
+    </div>
+</form>
